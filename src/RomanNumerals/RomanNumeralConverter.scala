@@ -41,7 +41,7 @@ class RomanNumeralConverter {
   private def fromRomanNumerals(numeral: String, digits: List[(String, Int)]): Int = numeral match {
     case n if digits == Nil => 0
     case n if n.startsWith(digits.head._1) => digits.head._2 + fromRomanNumerals(numeral.substring(digits.head._1.length), digits)
-    case _ => 0 + fromRomanNumerals(numeral, digits.tail)
+    case _ => fromRomanNumerals(numeral, digits.tail)
   }
 
   /**
