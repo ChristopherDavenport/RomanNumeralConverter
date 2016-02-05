@@ -37,6 +37,9 @@ class RomanNumeralConverter {
     * This works from highest to smallest through roman numerals.
     * If it matches then it increases the value and returns the entire list in case it is repeated
     * If it does not match it returns the whole string and moves to the next numeral
+    *
+    * TODO: The default step causes problems because if the Roman character being looked for is not found it .
+    * automatically advances. Need to build some data validation in at some point.
     */
   private def fromRomanNumerals(numeral: String, digits: List[(String, Int)]): Int = numeral match {
     case n if digits == Nil => 0
