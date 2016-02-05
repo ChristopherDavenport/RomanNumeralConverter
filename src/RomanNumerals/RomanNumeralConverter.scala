@@ -9,7 +9,7 @@ class RomanNumeralConverter {
   /**
     * Public method taking an Int and Returns a the string of Roman Numerals
     */
-   def convertToRoman(number: Int): String = {
+   def convertRoman(number: Int): String = {
      if (number <= 0) "Invalid number"
      else toRomanNumerals( number, RomanNumerals)
   }
@@ -17,7 +17,7 @@ class RomanNumeralConverter {
   /**
     * Public Method taking a string of Roman Numeral and Converts to an Int
     */
-  def convertFromRoman(numeral: String): Int = {
+  def convertRoman(numeral: String): Int = {
        fromRomanNumerals( numeral.toUpperCase(), RomanNumerals)
   }
 
@@ -34,24 +34,14 @@ class RomanNumeralConverter {
 
   /**
     * This function maps letters to number values and recursively adds through the list in the appropriate format.
-    * There should be a way to do this utilizing Roman numerals as the base but I couldn't figure it out. So I wrote
-    * it so it works. But it is repetitive. If you know a fix please let me know.
+    * This works from highest to smallest through roman numerals.
+    * If it matches then it increases the value and returns the entire list in case it is repeated
+    * If it does not match it returns the whole string and moves to the next numeral
     */
   private def fromRomanNumerals(numeral: String, digits: List[(String, Int)]): Int = numeral match {
-    case n if n.startsWith("M") => 1000 + fromRomanNumerals(numeral.substring(1), RomanNumerals)
-    case n if n.startsWith("CM") => 900 + fromRomanNumerals(numeral.substring(2), RomanNumerals)
-    case n if n.startsWith("D") => 500 + fromRomanNumerals(numeral.substring(1), RomanNumerals)
-    case n if n.startsWith("CD") => 400 + fromRomanNumerals(numeral.substring(2), RomanNumerals)
-    case n if n.startsWith("C") => 100 + fromRomanNumerals(numeral.substring(1), RomanNumerals)
-    case n if n.startsWith("XC") => 90 + fromRomanNumerals(numeral.substring(2), RomanNumerals)
-    case n if n.startsWith("L") => 50 + fromRomanNumerals(numeral.substring(1), RomanNumerals)
-    case n if n.startsWith("XL") => 40 + fromRomanNumerals(numeral.substring(2), RomanNumerals)
-    case n if n.startsWith("X") => 10 + fromRomanNumerals(numeral.substring(1), RomanNumerals)
-    case n if n.startsWith("IX") => 9 + fromRomanNumerals(numeral.substring(2), RomanNumerals)
-    case n if n.startsWith("V") => 5 + fromRomanNumerals(numeral.substring(1), RomanNumerals)
-    case n if n.startsWith("IV") => 10 + fromRomanNumerals(numeral.substring(2), RomanNumerals)
-    case n if n.startsWith("I") => 1 + fromRomanNumerals(numeral.substring(1), RomanNumerals)
-    case _ => 0
+    case n if digits == Nil => 0
+    case n if n.startsWith(digits.head._1) => digits.head._2 + fromRomanNumerals(numeral.substring(digits.head._1.length), digits)
+    case _ => 0 + fromRomanNumerals(numeral, digits.tail)
   }
 
   /**
