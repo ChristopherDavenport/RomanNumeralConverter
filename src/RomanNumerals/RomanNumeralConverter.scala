@@ -65,5 +65,11 @@ class RomanNumeralConverter {
     ("IV", 4),
     ("I", 1)
   )
+  
+  private def stringValidator(input: String, numerals: List[(String, Int)]): Boolean = {
+    val Sorter = numerals.map(_._1).mkString("").toCharArray
+    val filteredInput = input.filter(Sorter.contains(_))
+    filteredInput == input
+  }
 }
 
